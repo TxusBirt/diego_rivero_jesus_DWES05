@@ -12,6 +12,11 @@ return Application::configure(basePath: dirname(__DIR__))
     )
     ->withMiddleware(function (Middleware $middleware) {
         //
+        $middleware->validateCsrfTokens(except: [
+            'api/vehiculos/create', 
+            'api/vehiculos/update/*',
+            'api/vehiculos/delete/*'
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //
