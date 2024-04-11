@@ -35,7 +35,7 @@ class ValidarCreate extends FormRequest
             'marca'=> 'required',
             'modelo'=>'required',
             'clase'=> ['required','in:turismo,furgoneta,todoterreno', new ClaseRule],
-            'kilometros'=>'gte:0',
+            'kilometros'=>['required','gte:0'],
             'year'=>['required','gte:0', 'integer'],
             'disponible'=>['required', 'in:si,no', new Disponible],
             'prestado'=>['required', 'in:si,no', new Prestado],
@@ -53,58 +53,24 @@ class ValidarCreate extends FormRequest
     {
         return [
            // mensajes personalizados para orientra al usuario
-            'marca'=> 'El campo marca es obligatorio',
-            'modelo'=>'El campo modelo es obligatorio',
-            'clase.in'=> 'El campo clase es obligatorio y debe ser una de las siguientes: furgoneta, turismo, todoterreno',
-            'kilometros.gte'=>'Se debe introducir un numero igual o mayor que cero',
-            'year.gte'=>'Se debe introducir un numero entero igual o mayor que cero',
-            'disponible'=>'Campo obligatorio. Los valores validos son si o no',
-            'prestado'=>'Campo obligatorio. Los valores validos son si o no',
-            'fecha_inicio.date'=>'Introduzca una fecha valida',
-            'fecha_fin.after'=>'Introduzca una fecha valida que sea mayor que la fecha de inicio',
+            'marca'=> 'El campo "marca" es obligatorio',
+            'modelo'=>'El campo "modelo" es obligatorio',
+            'clase.in'=> 'El campo "clase" es obligatorio y debe ser una de las siguientes: furgoneta, turismo, todoterreno',
+            'kilometros.required' => 'El campo "kilometros" es obligatorio',
+            'kilometros.gte'=>'En "kilometros" se debe introducir un numero igual o mayor que cero',
+            'year.gte'=>'En año se debe introducir un numero entero igual o mayor que cero',
+            'disponible.in'=>'"disponible" es un campo obligatorio. Los valores validos son si o no',
+            'prestado.required'=>'"prestado" es un campo obligatorio. Los valores validos son si o no',
+            'fecha_inicio.date'=>'Introduzca una fecha de inicio valida con el formato "yyyy/mm/dd"',
+            'fecha_fin.date'=>'Introduzca una fecha valida con el formato "yyyy/mm/dd"',
+            'fecha_fin.after'=>'Introduzca una fecha final valida que sea mayor que la fecha de inicio',
             'usuario_id.exists'=>'Debe introducir un id de usuario existente',
-            'revision'=>'Campo obligatorio. Los valores validos son si o no',
-            'cuatro_por_cuatro'=>'Los valores validos son si o no',
-            'electrico'=>'Los valores validos son si o no',
-            'capacidad'=>'Los valores admitidos son alta, media y baja'
+            'revision.in'=>'En "revision" los valores validos son si o no',
+            'cuatro_por_cuatro.in'=>'Los valores validos en "cuatro_por_cuatro" son si o no',
+            'electrico.in'=>'Los valores validos en "electrico" son si o no',
+            'capacidad.in'=>'Los valores admitidos en "capacidad" son alta, media y baja'
            
         ];
     }
-    // Preparo la solicitud que se envía para que cumpla con una serie de criterios 
-    // de forma que haya consistencia en los datos
-    protected function prepareForValidation()
-    { 
-        // Si el campo "disponible" se establece como "no", establecer "prestado" como "no" y 
-        // los campos relativos al prestamo serán nulos (fecha_inicio, fecha_fin, usuario_id)
-        if ($this->disponible == 'no') {
-            $this->merge([
-                // Establecer el valor predeterminado para "prestado" como "no"
-                'prestado' => 'no', 
-                'fecha_inicio' => null,
-                'fecha_fin' => null,
-                'usuario_id' => null
-            ]);
-        }
-        // Si el campo "prestado" se establece como "no", establecer  
-        // los campos relativos al prestamo serán nulos (fecha_inicio, fecha_fin, usuario_id)
-        if ($this->prestado=='no') {
-            $this->merge([
-                'fecha_inicio' => null,
-                'fecha_fin' => null,
-                'usuario_id' => null
-            ]);
-        }
-        // si el vehiculo no está revisado no puede estar disponible ni prestado
-        // por lo que los campos relativos al prestamo serán nulos (fecha_inicio, fecha_fin, usuario_id)
-        if ($this->revision=='no') {
-            $this->merge([
-                'fecha_inicio' => null,
-                'fecha_fin' => null,
-                'usuario_id' => null,
-                'disponible' => 'no',
-                'prestado' => 'no'
-            ]);
-            
-        }
-    }
+
 }

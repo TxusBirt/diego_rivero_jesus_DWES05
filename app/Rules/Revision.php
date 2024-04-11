@@ -27,7 +27,7 @@ class Revision implements ValidationRule
             // Si "revision" es "no", entonces "prestado" debe ser "no", disponible "no" y los otros campos deben ser nulos
             if ($disponible == 'si' || $prestado == 'si' || $usuarioId !== null || 
                 $fecha_inicio !== null || $fecha_fin !== null) {
-                $fail("Si el campo $attribute es no los campos disponible y prestado son 'no' y los campos 'usuario_id' y 'fecha_inicio' y fecha_fin deben ser nulos.");
+                $fail("Si el campo $attribute toma el valor 'no' los campos disponible y prestado son 'no' y los campos 'usuario_id' y 'fecha_inicio' y fecha_fin deben ser nulos.");
             }
         }
     }

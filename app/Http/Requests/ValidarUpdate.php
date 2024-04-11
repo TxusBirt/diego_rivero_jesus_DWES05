@@ -59,22 +59,23 @@ class ValidarUpdate extends FormRequest
             'clase.in'=> 'El campo clase es obligatorio y debe ser una de las siguientes: furgoneta, turismo, todoterreno',
             'kilometros.gte'=>'Se debe introducir un numero igual o mayor que cero',
             'year.gte'=>'Se debe introducir un numero entero igual o mayor que cero',
-            'disponible.in'=>'Los valores validos son si o no',
-            'prestado.in'=>'Los valores validos son si o no',
-            'fecha_inicio.date'=>'Introduzca una fecha valida',
+            'disponible.in'=>'Los valores validos en "disponible" son si o no',
+            'prestado.in'=>'Los valores validos en "prestado" son si o no',
+            'fecha_inicio.date'=>'Introduzca una fecha valida con el formato "yyyy/mm/dd"',
+            'fecha_fin.date'=>'Introduzca una fecha valida con el formato "yyyy/mm/dd"',
             'fecha_fin.after'=>'Introduzca una fecha valida que sea mayor que la fecha de inicio',
             'usuario_id.exists'=>'Debe introducir un id de usuario existente',
-            'revision.in'=>'Los valores validos son si o no',
-            'cuatro_por_cuatro.in'=>'Los valores validos son si o no',
-            'cuatro_por_cuatro.required_if'=>'Se requiere valor si la clase es todoterreno',
-            'electrico.in'=>'Los valores validos son si o no',
-            'electrico.required_if'=>'Se requiere valor si la clase es turismo',
-            'capacidad'=>'Los valores admitidos son alta, media y baja',
-            'capacidad.required_if'=>'Se requiere valor si la clase es furgoneta'
+            'revision.in'=>'Los valores validos en "revision" son si o no',
+            'cuatro_por_cuatro.in'=>'Los valores validos en "cuatro_por_cuatro" son si o no',
+            'cuatro_por_cuatro.required_if'=>'Se requiere valor en "cuatro_por_cuatro" si la clase es todoterreno',
+            'electrico.in'=>'Los valores validos en "electrico" son si o no',
+            'electrico.required_if'=>'Se requiere valor en "electrico" si la clase es turismo',
+            'capacidad.in'=>'Los valores admitidos en "capacidad" son alta, media y baja',
+            'capacidad.required_if'=>'Se requiere valor si en "capacidad" la clase es furgoneta'
         ];
     }
-    // Preparo la solicitud que se envía para que cumpla con una serie de criterios 
-    // de forma que haya consistencia en los datos
+    // Preparo la solicitud mediante una validacion previa que se envía para que cumpla con una serie de criterios 
+    // de forma que haya consistencia en los datos.
     protected function prepareForValidation()
     { 
         // Si el campo "disponible" se establece como "no", establecer "prestado" como "no"

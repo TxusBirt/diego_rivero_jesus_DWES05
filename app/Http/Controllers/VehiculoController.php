@@ -58,7 +58,7 @@ class VehiculoController extends Controller
             // compruebo que el registro existe
             if (!$vehiculoPorId) {
                 // si no existe lo indico
-                //return ClientErrorCod::notFound('Registro no encontrado')//;
+
                 return  ClientErrorCod::notFound('El registro con id ' . $id . ' no existe');
             } else {
                 // si existe encapsulo los datos en el DTO lo que me 
@@ -100,13 +100,6 @@ class VehiculoController extends Controller
              return ClientErrorCod::notFound('El parametro '. $id . ' es invalido. Registros no encontrados');
         }
             
-            //$vehiculosClaseDTOJson = json_encode($vehiculosClaseDTO);
-            
-        /*else {
-            ClientErrorCod::notFound('Registros no encontrados');
-        }*/ 
-
-
     }
     // funcion para insertar nuevos vehiculos en la BBDD
     // He generado un form request para validar los datos que introduzco
@@ -162,6 +155,9 @@ class VehiculoController extends Controller
         // localizo y obtengo los datos del vehiculo a actualizar
         $vehiculoAct=Vehiculo::find($id);
         // actualizar registros cuando cambiamos la clase al vehículo
+        if (!$vehiculoAct) {
+            return ClientErrorCod::notFound('El registro con id ' . $id . ' no existe');
+        }
         if(isset($datosActualizar['clase']) && ($datosActualizar['clase'] != $vehiculoAct->clase) ) {
             // Borrar el registro correspondiente de la clase antigua
             if ($vehiculoAct->clase=='todoterreno') {
@@ -207,7 +203,6 @@ class VehiculoController extends Controller
                             'vehiculo_id' => $id, 
                             'electrico' => $value
                         ]);
-                        //$todoterreno->save();
                     } else {
                         $vehiculoAct->$key = $value;
                     }
@@ -220,7 +215,7 @@ class VehiculoController extends Controller
             foreach ($datosActualizar as $key => $value) {
                 // condicionales que actualizan los datos en las clases esepcificas
                 // primero actualizo los datos de las clases especificas y 
-                // luego de la general
+                // luego de la general vehiculo
                 if ($key=='cuatro_por_cuatro' && $value != null) {
                     $todoterreno = Todoterreno::find($id);
                     $todoterreno->cuatro_por_cuatro=$value;
@@ -265,29 +260,9 @@ class VehiculoController extends Controller
                         
             }
         }
-        /*foreach ($datosActualizar as $key => $value) {
-            if ($key=='cuatro_por_cuatro' && $value != null) {
-                $todoterreno = Todoterreno::find($id);
-                $todoterreno->cuatro_por_cuatro=$value;
-                $todoterreno->save();
-            } elseif ($key=='capacidad' && $value != null) {
-                $furgoneta = Furgoneta::find($id);
-                $furgoneta->capacidad=$value;
-                $furgoneta->save();               
-            } elseif ($key=='electrico' && $value != null) {
-                $turismo = Turismo::find($id);
-                $turismo->electrico=$value;
-                $turismo->save();               
-            } else {
-                if ($vehiculoAct->$key) {
-                    $vehiculoAct->$key = $value;
-                } 
-                
-            }
-        }*/
         // guardo los cambios de las propiedades actualizadas en vehiculos
         $vehiculoAct->save();
-        return SuccessCod::ok('registros actualizados correctamente');    
+        return SuccessCod::ok('registros actualizados correctamente. Recuerde que si disponible=no la propiedad prestado, se actualizará a no automaticamente y si prestado = no las propeidades fecha inicio, fecha fin y usuario_id se actualizaran a nulo automaticamente');    
     
     }
     public function delete($id)
@@ -295,7 +270,6 @@ class VehiculoController extends Controller
         $vehiculoId = Vehiculo::find($id);
        
         if (!$vehiculoId) {
-            //ClientErrorCod::notFound('Registro no encontrado');
             return ClientErrorCod::notFound('El registro con id ' . $id . ' no existe');
         } else {
             if ($vehiculoId->clase=='furgoneta' && Furgoneta::find($id)) {
@@ -307,6 +281,6 @@ class VehiculoController extends Controller
             } 
         $vehiculoId->delete();
         return SuccessCod::ok('registro eliminado correctamente');    
-    }
+        }
     }
 }

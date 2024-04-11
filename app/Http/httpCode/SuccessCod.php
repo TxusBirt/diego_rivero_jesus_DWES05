@@ -9,15 +9,15 @@
 namespace App\Http\httpCode;
 class SuccessCod {
     public static function ok($data = null) {
-        return response()->json(self::generateResponse(200, 'OK', $data));
+        return response()->json(self::generateResponse(200, 'OK', $data),200);
     }
 
     public static function created($data = null) {
-        return response()->json(self::generateResponse(201, 'Created', $data));
+        return response()->json(self::generateResponse(201, 'Created', $data), 201);
     }
 
     public static function accepted($data = null) {
-        return response()->json(self::generateResponse(202, 'Accepted', $data));
+        return response()->json(self::generateResponse(202, 'Accepted', $data), 202);
     }
 
     public static function noContent($data = null) {
