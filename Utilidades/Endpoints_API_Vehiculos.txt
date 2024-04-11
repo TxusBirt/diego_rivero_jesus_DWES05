@@ -1,0 +1,57 @@
+Endpoints API Vehiculos
+
+GetAll
+Metodo GET
+https://localhost/diego_rivero_jesus_DWES05/public/api/vehiculos
+
+GetId
+Metodo GET
+Obtener 1 vehiculo por id:
+https://localhost/diego_rivero_jesus_DWES05/public/api/vehiculos/1
+
+Obtener todos los vehiculos clase turismo
+https://localhost/diego_rivero_jesus_DWES05/public/api/vehiculos/turismo
+
+Obtener todos los vehiculos prestados
+https://localhost/diego_rivero_jesus_DWES05/public/api/vehiculos/prestado
+
+CREATE
+Metodo POST
+Nota: para que realice las validaciones y muestre los mensajes personalizados de las validaciones se debe 	indicar en el header que la solicitud es un archivo json
+https://localhost/diego_rivero_jesus_DWES05/public/api/vehiculos/create
+
+    {
+      
+      "marca": "suzuki",
+      "modelo": "vitara",
+      "kilometros": "0",
+      "year": 2004,
+      "clase": "furgoneta",
+      "capacidad": "media",
+      "disponible": "si",
+      "prestado": "no",
+      "fecha_inicio": "",
+      "fecha_fin": "",
+      "usuario_id": "",
+      "revision": ""
+     
+    }
+
+UPDATE
+Metodo PUT
+Nota: para que realice las validaciones y muestre los mensajes personalizados de las validaciones se debe 	indicar en el header que la solicitud es un archivo json
+https://localhost/diego_rivero_jesus_DWES05/public/api/vehiculos/update/11
+
+{
+      "marca": "ford",
+      "modelo": "vitara",
+      "kilometros": "0",
+      "year": 2004,
+      "clase": "furgoneta",
+      "capacidad": "alta",
+      "disponible": "no",
+      "prestado": "no"    
+}
+DELETE
+Metodo DELETE
+https://localhost/diego_rivero_jesus_DWES05/vehiculos-app/public/api/vehiculos/delete/10
