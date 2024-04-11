@@ -1,5 +1,5 @@
 Este proyecto se ha desarrollado con Laravel 11.
-Una vez clonado el proyecto en local se debe, en la crapeta del proyecto ejecutar los sigueinets comandos para instalar las dependencias:
+Una vez clonado el proyecto en local se debe, en la carpeta del proyecto, ejecutar los siguientes comandos para instalar las dependencias:
 
 composer install
 
